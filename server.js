@@ -2,6 +2,7 @@
 const express = require('express');
 const apiRoutes = require('./routes/apiRoutes');
 const htmlRoutes = require('./routes/htmlRoutes');
+const notes = require('./routes/notes')
 
 // initializes app and creates a port
 const app = express();
