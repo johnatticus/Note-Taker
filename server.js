@@ -1,7 +1,7 @@
 // required routes for our api/html
 const express = require('express');
-const apiRoute = require('./routes/apiRoutes');
-const htmlRoute = require('./routes/htmlRoutes');
+const apiRoutes = require('./routes/apiRoutes');
+const htmlRoutes = require('./routes/htmlRoutes');
 
 // initializes app and creates a port
 const app = express();
@@ -11,6 +11,8 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static('public'));
+app.use('/api', apiRoutes);
+app.use('/', htmlRoutes);
 
 // starts the server on the port
 app.listen(PORT, () => console.log('This port is listening at ${PORT}'));
