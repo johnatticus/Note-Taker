@@ -4,12 +4,13 @@
         "text": "Test text"
     },
     {
-        "title": "DELETE ME PLZ",
-        "text": "I hope I can be deleted."
+        "title": "delte me",
+        "text": "plz",
+        "id": "23b31e0f-03b0-4e83-8993-d1e0bb264ea4"
     },
     {
-        "title": "sdfsdfsdfsdf",
-        "text": "sdfsdfsdfsdf",
-        "note_id": "12d66fe3-f1a5-4861-b09b-02cf1749a495"
+        "title": "THIS WORKS?!",
+        "text": "it worked WHAAAAAT",
+        "id": "70831a81-ec23-4333-af0b-8a662585225c"
     }
 ]

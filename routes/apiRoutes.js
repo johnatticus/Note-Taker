@@ -1,5 +1,5 @@
 // require router and db items needed
-const router = require('express').Router();
+const notes = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const {
     readFromFile,
@@ -10,17 +10,17 @@ const {
 // set up get/post/delete methods as responses to the database
 
 // GET Route for retrieving all notes
-router.get('/notes', (req, res) => {
+notes.get('/notes', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
   });
 
 // get route for specific note
-router.get('/:note_id', (req, res) => {
-    const noteId = req.params.note_id;
+notes.get('/notes/:id', (req, res) => {
+    const noteId = req.params.id;
     readFromFile('./db/db.json')
       .then((data) => JSON.parse(data))
       .then((json) => {
-        const result = json.filter((note) => note.note_id === noteId);
+        const result = json.filter((note) => note.id === noteId);
         return result.length > 0
           ? res.json(result)
           : res.json('There are no notes with that ID');
@@ -28,24 +28,28 @@ router.get('/:note_id', (req, res) => {
   });
 
 // DELETE Route for a specific tip
-router.delete('/:note_id', (req, res) => {
-    const noteId = req.params.note_id;
+notes.delete('/notes/:id', (req, res) => {
+    const noteId = req.params.id;
     readFromFile('./db/db.json')
       .then((data) => JSON.parse(data))
-      .then((json) => {
+      .then((notes) => {
+        console.log(req.params.id);
+        // console.log(notes);
         // Make a new array of all tips except the one with the ID provided in the URL
-        const result = json.filter((note) => note.note_id !== noteId);
-  
+        notes.filter((note) => note.id !== noteId);
+      })
+      .then((filteredNotes) => {
+        console.log(filteredNotes);
+        filteredNotes = JSON.stringify(filteredNotes);
         // Save that array to the filesystem
-        writeToFile('./db/db.json', result);
-  
+        writeToFile('./db/db.json', filteredNotes);
+      })
         // Respond to the DELETE request
         res.json(`${noteId} has been deleted`);
-      });
   });
 
 // post route for new note
-router.post('/notes', (req, res) => {
+notes.post('/notes', (req, res) => {
     console.log(req.body);
   
     const { title, text } = req.body;
@@ -54,7 +58,7 @@ router.post('/notes', (req, res) => {
       const newNote = {
         title,
         text,
-        note_id: uuidv4(),
+        id: uuidv4(),
       };
   
       readAndAppend(newNote, './db/db.json');
@@ -65,4 +69,4 @@ router.post('/notes', (req, res) => {
   });
 
 // export to the router
-module.exports = router;
+module.exports = notes;
