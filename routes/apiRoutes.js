@@ -1,5 +1,4 @@
 // require router and db items needed
-const { route } = require('express/lib/application');
 const router = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const {
@@ -7,7 +6,6 @@ const {
     readAndAppend,
     writeToFile,
   } = require('../helpers/fsUtils');
-// const db = require('../db/db.json');
 
 // set up get/post/delete methods as responses to the database
 
