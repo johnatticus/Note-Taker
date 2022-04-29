@@ -1,6 +1,7 @@
 // require router and db items needed
 const { route } = require('express/lib/application');
 const router = require('express').Router();
+const uuid = require('uuid');
 const {
     readFromFile,
     readAndAppend,
@@ -9,17 +10,23 @@ const {
 // const db = require('../db/db.json');
 
 // set up get/post/delete methods as responses to the database
+
+// GET Route for retrieving all notes
+router.get('/', (req, res) => {
+    readFromFile('../db/db.json').then((data) => res.json(JSON.parse(data)));
+  });
+
 // get route for specific note
 router.get('/:note_id', (req, res) => {
     const tipId = req.params.note_id;
     readFromFile('./db/db.json')
       .then((data) => JSON.parse(data))
-      .then((json) => {
-        const result = json.filter((note) => note.note_id === noteId);
-        return result.length > 0
-          ? res.json(result)
-          : res.json('There are no notes with that ID');
-      });
+    //   .then((json) => {
+    //     const result = json.filter((note) => note.note_id === noteId);
+    //     return result.length > 0
+    //       ? res.json(result)
+    //       : res.json('There are no notes with that ID');
+    //   });
   });
 
 // post route for new note
@@ -32,10 +39,10 @@ router.post('/', (req, res) => {
       const newNote = {
         title,
         text,
-        note_id: uuidv1(),
+        note_id: uuid(),
       };
   
-      readAndAppend(newNote, './db/db.json');
+      writeToFile(newNote, '../db/db.json');
       res.json(`Note added successfully`);
     } else {
       res.error('ERROR: Could not add note. sad!');
