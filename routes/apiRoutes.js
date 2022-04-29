@@ -16,7 +16,7 @@ router.get('/notes', (req, res) => {
 
 // get route for specific note
 router.get('/:note_id', (req, res) => {
-    const tipId = req.params.note_id;
+    const noteId = req.params.note_id;
     readFromFile('./db/db.json')
       .then((data) => JSON.parse(data))
       .then((json) => {
@@ -24,6 +24,23 @@ router.get('/:note_id', (req, res) => {
         return result.length > 0
           ? res.json(result)
           : res.json('There are no notes with that ID');
+      });
+  });
+
+// DELETE Route for a specific tip
+router.delete('/:note_id', (req, res) => {
+    const noteId = req.params.note_id;
+    readFromFile('./db/db.json')
+      .then((data) => JSON.parse(data))
+      .then((json) => {
+        // Make a new array of all tips except the one with the ID provided in the URL
+        const result = json.filter((note) => note.note_id !== noteId);
+  
+        // Save that array to the filesystem
+        writeToFile('./db/db.json', result);
+  
+        // Respond to the DELETE request
+        res.json(`${noteId} has been deleted`);
       });
   });
 
@@ -40,8 +57,8 @@ router.post('/notes', (req, res) => {
         note_id: uuidv4(),
       };
   
-      writeToFile(newNote, './db/db.json');
-      res.json(`Note added successfully`);
+      readAndAppend(newNote, './db/db.json');
+      res.json(`Note added`);
     } else {
       res.error('ERROR: Could not add note. sad!');
     }

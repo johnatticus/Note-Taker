@@ -1,6 +1,15 @@
 [
     {
-        "title":"Test Title",
-        "text":"Test text"
+        "title": "Test Title",
+        "text": "Test text"
+    },
+    {
+        "title": "DELETE ME PLZ",
+        "text": "I hope I can be deleted."
+    },
+    {
+        "title": "sdfsdfsdfsdf",
+        "text": "sdfsdfsdfsdf",
+        "note_id": "12d66fe3-f1a5-4861-b09b-02cf1749a495"
     }
 ]
