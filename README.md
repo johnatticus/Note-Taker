@@ -50,5 +50,5 @@ Created by John Hysong
 
 **GitHub Repo:** [Click Here](https://github.com/johnatticus/Note-Taker)
 
-**GitHub Live Link:** [Click Here](https://johnatticus.github.io/Note-Taker)
+**Heroku Live Link:** [Click Here](https://afternoon-crag-06851.herokuapp.com/)
 
