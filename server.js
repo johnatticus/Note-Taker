@@ -15,7 +15,6 @@ app.use(express.static('public'));
 app.use('/api', apiRoutes);
 app.use('/', htmlRoutes);
 
-app.use(express.static('public'));
 
 
 // starts the server on the port

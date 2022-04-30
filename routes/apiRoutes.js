@@ -1,4 +1,4 @@
-// require router and db items needed
+// require router, uuid, and fsUtils
 const notes = require('express').Router();
 const { v4: uuidv4 } = require('uuid');
 const {
@@ -14,7 +14,7 @@ notes.get('/notes', (req, res) => {
     readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
   });
 
-// get route for specific note
+// GET route for specific note when clicked
 notes.get('/notes/:id', (req, res) => {
     const noteId = req.params.id;
     readFromFile('./db/db.json')
@@ -27,28 +27,25 @@ notes.get('/notes/:id', (req, res) => {
       });
   });
 
-// DELETE Route for a specific tip
+// DELETE route for a specific tip when the trash can icon is clicked
 notes.delete('/notes/:id', (req, res) => {
     const noteId = req.params.id;
+    // console.log(noteId);
     readFromFile('./db/db.json')
-      .then((data) => JSON.parse(data))
-      .then((notes) => {
-        console.log(req.params.id);
-        // console.log(notes);
-        // Make a new array of all tips except the one with the ID provided in the URL
-        notes.filter((note) => note.id !== noteId);
+    .then((data) => JSON.parse(data))
+    .then((json) => {
+      // Make a new array of all tips EXCEPT the one that is selected to be deleted
+      const result = json.filter((note) => note.id !== noteId);
+      // console.log(result)
+
+      // save the new array to the filesystem
+      writeToFile('./db/db.json', result);
       })
-      .then((filteredNotes) => {
-        console.log(filteredNotes);
-        filteredNotes = JSON.stringify(filteredNotes);
-        // Save that array to the filesystem
-        writeToFile('./db/db.json', filteredNotes);
-      })
-        // Respond to the DELETE request
+        // Respond to the DELETE request...this doesn't work?
         res.json(`${noteId} has been deleted`);
   });
 
-// post route for new note
+// POST route for new note
 notes.post('/notes', (req, res) => {
     console.log(req.body);
   

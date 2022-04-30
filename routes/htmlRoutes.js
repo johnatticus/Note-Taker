@@ -1,5 +1,4 @@
 // path and router items needed
-const { route } = require('express/lib/application');
 const path = require('path');
 const router = require('express').Router();
 
